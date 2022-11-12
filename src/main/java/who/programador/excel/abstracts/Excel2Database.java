@@ -1,10 +1,17 @@
 package who.programador.excel.abstracts;
 
+
+import lombok.Getter;
+import lombok.Setter;
 import who.programador.excel.interfaces.IExcel2MySQLBehavior;
 
 import java.io.IOException;
 
+@Getter
+@Setter
 public abstract class Excel2Database {
+
+    private String excelFilePath;
     public Excel2Database() {
     }
 

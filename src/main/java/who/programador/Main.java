@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         Excel2Database excel2Database = new ExcelPerson();
         try {
-            excel2Database.performSave("src/main/resources/who.xlsx");
+            excel2Database.performSave(excel2Database.getExcelFilePath());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
