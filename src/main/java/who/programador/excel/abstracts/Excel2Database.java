@@ -21,7 +21,10 @@ public abstract class Excel2Database {
         iExcel2MySQLBehavior.saveInDatabase(excelFilePath);
     }
 
-    public void setiExcel2MySQLBehavior(IExcel2MySQLBehavior iExcel2MySQLBehavior) {
+    /*
+    The Method is for changing the behavior os saving the data.
+     */
+    public void setExcel2MySQLBehavior(IExcel2MySQLBehavior iExcel2MySQLBehavior) {
         this.iExcel2MySQLBehavior = iExcel2MySQLBehavior;
     }
 }
