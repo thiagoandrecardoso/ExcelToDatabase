@@ -26,7 +26,7 @@ public class Excel2Database {
         return firstSheet.iterator();
     }
 
-    public static void iteratorSheet(String excelFilePath) throws IOException {
+    public static void saveInDatabase(String excelFilePath) throws IOException {
         Workbook workbook = getWorkbook(excelFilePath);
         Iterator<Row> rowIterator = getRowIterator(workbook);
         rowIterator.next();
