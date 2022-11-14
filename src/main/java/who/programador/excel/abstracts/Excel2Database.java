@@ -13,6 +13,7 @@ import java.sql.SQLException;
 public abstract class Excel2Database {
 
     private String excelFilePath;
+
     public Excel2Database() {
     }
 

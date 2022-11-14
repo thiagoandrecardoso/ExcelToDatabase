@@ -8,6 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import who.programador.connections.IStatement;
 import who.programador.connections.StatementPostgresServer;
 import who.programador.excel.interfaces.IExcel2MySQLBehavior;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -19,6 +20,7 @@ import java.util.Iterator;
 public class Excel2MySQLStudent implements IExcel2MySQLBehavior {
 
     private final IStatement statement = new StatementPostgresServer();
+
     @Override
     public void saveInDatabase(String excelFilePath) throws IOException, SQLException {
 
@@ -70,7 +72,7 @@ public class Excel2MySQLStudent implements IExcel2MySQLBehavior {
         }
     }
 
-    public static Iterator<Row> getRowIterator(Workbook workbook ){
+    public static Iterator<Row> getRowIterator(Workbook workbook) {
         Sheet firstSheet = workbook.getSheetAt(0);
         return firstSheet.iterator();
     }
