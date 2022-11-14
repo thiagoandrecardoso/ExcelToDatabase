@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import who.programador.connections.IStatement;
 import who.programador.connections.StatementPostgresServer;
-import who.programador.excel.interfaces.IExcel2MySQLBehavior;
+import who.programador.excel.interfaces.IExcel2PostgresBehavior;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Iterator;
 
-public class Excel2MySQLStudent implements IExcel2MySQLBehavior {
+public class Excel2PostgresStudent implements IExcel2PostgresBehavior {
 
     private final IStatement statement = new StatementPostgresServer();
 

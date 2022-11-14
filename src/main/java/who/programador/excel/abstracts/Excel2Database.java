@@ -3,7 +3,7 @@ package who.programador.excel.abstracts;
 
 import lombok.Getter;
 import lombok.Setter;
-import who.programador.excel.interfaces.IExcel2MySQLBehavior;
+import who.programador.excel.interfaces.IExcel2PostgresBehavior;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ public abstract class Excel2Database {
     public Excel2Database() {
     }
 
-    public IExcel2MySQLBehavior iExcel2MySQLBehavior;
+    public IExcel2PostgresBehavior iExcel2MySQLBehavior;
 
     public void performSave(String excelFilePath) throws IOException {
         try {
@@ -30,7 +30,7 @@ public abstract class Excel2Database {
     /*
     The Method is for changing the behavior os saving the data.
      */
-    public void setExcel2MySQLBehavior(IExcel2MySQLBehavior iExcel2MySQLBehavior) {
+    public void setExcel2MySQLBehavior(IExcel2PostgresBehavior iExcel2MySQLBehavior) {
         this.iExcel2MySQLBehavior = iExcel2MySQLBehavior;
     }
 }
