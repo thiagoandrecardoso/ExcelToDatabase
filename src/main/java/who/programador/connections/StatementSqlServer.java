@@ -6,14 +6,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@AllArgsConstructor
+
 public class StatementSqlServer implements IStatement{
 
-    private final IJdbcConnection jdbcConnection;
+    private final IJdbcConnection jdbcConnection = new SQLServerConnection();
+    private Connection connection = null;
 
     public PreparedStatement getPreparedStatement() {
         String sql = "INSERT INTO students (name, enrolled, progress) VALUES (?, ?, ?)";
-        final Connection connection = jdbcConnection.getConnection();
+        connection = jdbcConnection.getConnection();
 
         PreparedStatement statement;
         try {
@@ -23,5 +24,9 @@ public class StatementSqlServer implements IStatement{
         }
 
         return statement;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

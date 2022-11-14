@@ -8,9 +8,9 @@ public class SQLServerConnection implements IJdbcConnection {
 
     @Override
     public Connection getConnection() {
-        String jdbcURL = "jdbc:mysql://127.0.0.1:1433/master";
-        String username = "SA";
-        String password = "Password123";
+        String jdbcURL = "jdbc:postgresql://127.0.0.1:5432/postgres";
+        String username = "postgres";
+        String password = "abacaxi98";
 
         Connection connection = null;
 
