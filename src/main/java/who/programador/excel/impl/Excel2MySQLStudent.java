@@ -1,19 +1,28 @@
 package who.programador.excel.impl;
 
+import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import who.programador.connections.IStatement;
 import who.programador.excel.interfaces.IExcel2MySQLBehavior;
-
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.Iterator;
 
+@AllArgsConstructor
 public class Excel2MySQLStudent implements IExcel2MySQLBehavior {
+
+    private final IStatement statement;
     @Override
-    public void saveInDatabase(String excelFilePath) throws IOException {
+    public void saveInDatabase(String excelFilePath) throws IOException, SQLException {
+
+        final PreparedStatement preparedStatement = statement.getPreparedStatement();
         Workbook workbook = getWorkbook(excelFilePath);
         Iterator<Row> rowIterator = getRowIterator(workbook);
         rowIterator.next();
@@ -28,13 +37,16 @@ public class Excel2MySQLStudent implements IExcel2MySQLBehavior {
 
                 switch (columnIndex) {
                     case 0:
-                        System.out.println(nextCell.getStringCellValue());
+                        String name = nextCell.getStringCellValue();
+                        preparedStatement.setString(1, name);
                         break;
                     case 1:
-                        System.out.println(nextCell.getDateCellValue());
+                        Date enrollmentDate = nextCell.getDateCellValue();
+                        preparedStatement.setDate(2, new java.sql.Date(enrollmentDate.getTime()));
                         break;
                     case 2:
-                        System.out.println(nextCell.getNumericCellValue());
+                        int progress = (int) nextCell.getNumericCellValue();
+                        preparedStatement.setInt(3, progress);
                         break;
                 }
             }

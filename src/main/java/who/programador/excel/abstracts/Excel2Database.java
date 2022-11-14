@@ -6,6 +6,7 @@ import lombok.Setter;
 import who.programador.excel.interfaces.IExcel2MySQLBehavior;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @Getter
 @Setter
@@ -18,7 +19,11 @@ public abstract class Excel2Database {
     public IExcel2MySQLBehavior iExcel2MySQLBehavior;
 
     public void performSave(String excelFilePath) throws IOException {
-        iExcel2MySQLBehavior.saveInDatabase(excelFilePath);
+        try {
+            iExcel2MySQLBehavior.saveInDatabase(excelFilePath);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /*

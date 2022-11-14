@@ -1,14 +1,13 @@
-package who.programador.excel.tosql;
+package who.programador.connections;
 
 import lombok.AllArgsConstructor;
-import who.programador.connections.IJdbcConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @AllArgsConstructor
-public class ToSQLServer {
+public class StatementSqlServer implements IStatement{
 
     private final IJdbcConnection jdbcConnection;
 
