@@ -1,13 +1,13 @@
 package who.programador;
 
 import who.programador.excel.abstracts.Excel2Database;
-import who.programador.excel.model.ExcelPerson;
+import who.programador.excel.model.ExcelStudent;
 
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        Excel2Database excel2Database = new ExcelPerson();
+        Excel2Database excel2Database = new ExcelStudent();
         try {
             excel2Database.performSave(excel2Database.getExcelFilePath());
         } catch (IOException e) {

@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
-public class Excel2MySQLPerson implements IExcel2MySQLBehavior {
+public class Excel2MySQLStudent implements IExcel2MySQLBehavior {
     @Override
     public void saveInDatabase(String excelFilePath) throws IOException {
         Workbook workbook = getWorkbook(excelFilePath);
@@ -24,13 +24,18 @@ public class Excel2MySQLPerson implements IExcel2MySQLBehavior {
 
             while (cellIterator.hasNext()) {
                 Cell nextCell = cellIterator.next();
-
                 int columnIndex = nextCell.getColumnIndex();
-                if (columnIndex == 0) {
-                    System.out.println(nextCell.getStringCellValue());
-                }
-                if (columnIndex == 1) {
-                    System.out.println(nextCell.getNumericCellValue());
+
+                switch (columnIndex) {
+                    case 0:
+                        System.out.println(nextCell.getStringCellValue());
+                        break;
+                    case 1:
+                        System.out.println(nextCell.getDateCellValue());
+                        break;
+                    case 2:
+                        System.out.println(nextCell.getNumericCellValue());
+                        break;
                 }
             }
         }
