@@ -1,15 +1,13 @@
 package who.programador.connections;
 
-import lombok.AllArgsConstructor;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class StatementSqlServer implements IStatement{
+public class StatementPostgresServer implements IStatement{
 
-    private final IJdbcConnection jdbcConnection = new SQLServerConnection();
+    private final IJdbcConnection jdbcConnection = new PostgresServerConnection();
     private Connection connection = null;
 
     public PreparedStatement getPreparedStatement() {

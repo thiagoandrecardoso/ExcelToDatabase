@@ -1,13 +1,12 @@
 package who.programador.excel.impl;
 
-import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import who.programador.connections.IStatement;
-import who.programador.connections.StatementSqlServer;
+import who.programador.connections.StatementPostgresServer;
 import who.programador.excel.interfaces.IExcel2MySQLBehavior;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,7 +18,7 @@ import java.util.Iterator;
 
 public class Excel2MySQLStudent implements IExcel2MySQLBehavior {
 
-    private final IStatement statement = new StatementSqlServer();
+    private final IStatement statement = new StatementPostgresServer();
     @Override
     public void saveInDatabase(String excelFilePath) throws IOException, SQLException {
 
@@ -27,8 +26,6 @@ public class Excel2MySQLStudent implements IExcel2MySQLBehavior {
         Workbook workbook = getWorkbook(excelFilePath);
         Iterator<Row> rowIterator = getRowIterator(workbook);
         rowIterator.next();
-        int batchSize = 20;
-        int count = 0;
 
         while (rowIterator.hasNext()) {
             Row nextRow = rowIterator.next();

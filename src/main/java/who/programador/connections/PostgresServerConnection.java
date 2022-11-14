@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class SQLServerConnection implements IJdbcConnection {
+public class PostgresServerConnection implements IJdbcConnection {
 
     @Override
     public Connection getConnection() {
