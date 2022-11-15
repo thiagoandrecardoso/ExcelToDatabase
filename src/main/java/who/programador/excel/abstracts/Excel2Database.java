@@ -1,9 +1,8 @@
 package who.programador.excel.abstracts;
 
-
 import lombok.Getter;
 import lombok.Setter;
-import who.programador.excel.interfaces.IExcel2PostgresBehavior;
+import who.programador.excel.interfaces.IExcel2DatabaseBehavior;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,11 +16,11 @@ public abstract class Excel2Database {
     public Excel2Database() {
     }
 
-    public IExcel2PostgresBehavior iExcel2MySQLBehavior;
+    public IExcel2DatabaseBehavior iExcel2DatabaseBehavior;
 
     public void performSave(String excelFilePath) throws IOException {
         try {
-            iExcel2MySQLBehavior.saveInDatabase(excelFilePath);
+            iExcel2DatabaseBehavior.insertInDatabase(excelFilePath);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -30,7 +29,7 @@ public abstract class Excel2Database {
     /*
     The Method is for changing the behavior os saving the data.
      */
-    public void setExcel2MySQLBehavior(IExcel2PostgresBehavior iExcel2MySQLBehavior) {
-        this.iExcel2MySQLBehavior = iExcel2MySQLBehavior;
+    public void setExcel2DatabaseBehavior(IExcel2DatabaseBehavior iExcel2DatabaseBehavior) {
+        this.iExcel2DatabaseBehavior = iExcel2DatabaseBehavior;
     }
 }

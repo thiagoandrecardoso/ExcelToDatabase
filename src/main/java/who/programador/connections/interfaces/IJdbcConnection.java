@@ -1,4 +1,4 @@
-package who.programador.connections;
+package who.programador.connections.interfaces;
 
 import java.sql.Connection;
 

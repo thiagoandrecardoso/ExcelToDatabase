@@ -1,10 +1,12 @@
-package who.programador.connections;
+package who.programador.connections.impls;
+
+import who.programador.connections.interfaces.IJdbcConnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class PostgresServerConnection implements IJdbcConnection {
+public class JdbcPostgresServerConnection implements IJdbcConnection {
 
     @Override
     public Connection getConnection() {

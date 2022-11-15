@@ -5,9 +5,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import who.programador.connections.IStatement;
-import who.programador.connections.StatementPostgresServer;
-import who.programador.excel.interfaces.IExcel2PostgresBehavior;
+import who.programador.connections.interfaces.IStatement;
+import who.programador.connections.impls.StatementDatabaseServer;
+import who.programador.excel.interfaces.IExcel2DatabaseBehavior;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,14 +17,18 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Iterator;
 
-public class Excel2PostgresStudent implements IExcel2PostgresBehavior {
+public class Excel2DatabaseStudent implements IExcel2DatabaseBehavior {
 
-    private final IStatement statement = new StatementPostgresServer();
+    private final PreparedStatement preparedStatement;
+
+    public Excel2DatabaseStudent() {
+        IStatement statement = new StatementDatabaseServer();
+        preparedStatement = statement.getPreparedStatementInsertIntoStudents();
+    }
 
     @Override
-    public void saveInDatabase(String excelFilePath) throws IOException, SQLException {
+    public void insertInDatabase(String excelFilePath) throws IOException, SQLException {
 
-        final PreparedStatement preparedStatement = statement.getPreparedStatement();
         Workbook workbook = getWorkbook(excelFilePath);
         Iterator<Row> rowIterator = getRowIterator(workbook);
         rowIterator.next();
