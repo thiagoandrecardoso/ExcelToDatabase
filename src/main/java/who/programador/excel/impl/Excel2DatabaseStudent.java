@@ -2,14 +2,12 @@ package who.programador.excel.impl;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import who.programador.connections.interfaces.IStatement;
 import who.programador.connections.impls.StatementDatabaseServer;
+import who.programador.connections.interfaces.IStatement;
 import who.programador.excel.interfaces.IExcel2DatabaseBehavior;
+import who.programador.excel.shared.ExcelMethodShared;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -29,8 +27,8 @@ public class Excel2DatabaseStudent implements IExcel2DatabaseBehavior {
     @Override
     public void insertInDatabase(String excelFilePath) throws IOException, SQLException {
 
-        Workbook workbook = getWorkbook(excelFilePath);
-        Iterator<Row> rowIterator = getRowIterator(workbook);
+        Workbook workbook = ExcelMethodShared.getWorkbook(excelFilePath);
+        Iterator<Row> rowIterator = ExcelMethodShared.getRowIterator(workbook);
         rowIterator.next();
 
         while (rowIterator.hasNext()) {
@@ -65,19 +63,5 @@ public class Excel2DatabaseStudent implements IExcel2DatabaseBehavior {
 
         preparedStatement.getConnection().commit();
         preparedStatement.getConnection().close();
-    }
-
-    public static Workbook getWorkbook(String excelFilePath) {
-        try {
-            FileInputStream inputStream = new FileInputStream(excelFilePath);
-            return new XSSFWorkbook(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Iterator<Row> getRowIterator(Workbook workbook) {
-        Sheet firstSheet = workbook.getSheetAt(0);
-        return firstSheet.iterator();
     }
 }
