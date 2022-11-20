@@ -3,10 +3,10 @@ package who.programador.excel.impl;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
-import who.programador.connections.impls.StatementDatabaseServer;
-import who.programador.connections.interfaces.IStatement;
-import who.programador.excel.interfaces.IExcel2DatabaseBehavior;
-import who.programador.excel.shared.ExcelMethodShared;
+import who.programador.connections.StatementDatabaseServer;
+import who.programador.connections.IStatement;
+import who.programador.excel.interfaces.IExcel2Database;
+import who.programador.excel.shared.ExcelMethod;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Iterator;
 
-public class Excel2DatabaseOnCall implements IExcel2DatabaseBehavior {
+public class Excel2DatabaseOnCall implements IExcel2Database {
 
     private final PreparedStatement preparedStatement;
 
@@ -26,8 +26,8 @@ public class Excel2DatabaseOnCall implements IExcel2DatabaseBehavior {
 
     @Override
     public void insertInDatabase(String excelFilePath) throws IOException, SQLException {
-        Workbook workbook = ExcelMethodShared.getWorkbook(excelFilePath);
-        Iterator<Row> rowIterator = ExcelMethodShared.getRowIterator(workbook);
+        Workbook workbook = ExcelMethod.getWorkbook(excelFilePath);
+        Iterator<Row> rowIterator = ExcelMethod.getRowIterator(workbook);
         rowIterator.next();
 
         while (rowIterator.hasNext()) {

@@ -1,4 +1,4 @@
-package who.programador.connections.interfaces;
+package who.programador.connections;
 
 import java.sql.PreparedStatement;
 

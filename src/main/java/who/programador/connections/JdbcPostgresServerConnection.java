@@ -1,6 +1,4 @@
-package who.programador.connections.impls;
-
-import who.programador.connections.interfaces.IJdbcConnection;
+package who.programador.connections;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +12,7 @@ public class JdbcPostgresServerConnection implements IJdbcConnection {
         String username = "postgres";
         String password = "suasenha";
 
-        Connection connection = null;
+        Connection connection;
 
         try {
             connection = DriverManager.getConnection(jdbcURL, username, password);

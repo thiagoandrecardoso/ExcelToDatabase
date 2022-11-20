@@ -1,7 +1,4 @@
-package who.programador.connections.impls;
-
-import who.programador.connections.interfaces.IJdbcConnection;
-import who.programador.connections.interfaces.IStatement;
+package who.programador.connections;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

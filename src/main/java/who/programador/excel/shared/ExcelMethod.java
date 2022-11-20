@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
-public class ExcelMethodShared {
+public class ExcelMethod {
     public static Workbook getWorkbook(String excelFilePath) {
         try {
             FileInputStream inputStream = new FileInputStream(excelFilePath);

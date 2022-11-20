@@ -2,7 +2,7 @@ package who.programador.excel.abstracts;
 
 import lombok.Getter;
 import lombok.Setter;
-import who.programador.excel.interfaces.IExcel2DatabaseBehavior;
+import who.programador.excel.interfaces.IExcel2Database;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ public abstract class Excel2Database {
     public Excel2Database() {
     }
 
-    public IExcel2DatabaseBehavior iExcel2DatabaseBehavior;
+    public IExcel2Database iExcel2DatabaseBehavior;
 
     public void performSave(String excelFilePath) throws IOException {
         try {
@@ -29,7 +29,7 @@ public abstract class Excel2Database {
     /*
     The Method is for changing the behavior os saving the data.
      */
-    public void setExcel2DatabaseBehavior(IExcel2DatabaseBehavior iExcel2DatabaseBehavior) {
+    public void setExcel2DatabaseBehavior(IExcel2Database iExcel2DatabaseBehavior) {
         this.iExcel2DatabaseBehavior = iExcel2DatabaseBehavior;
     }
 }
