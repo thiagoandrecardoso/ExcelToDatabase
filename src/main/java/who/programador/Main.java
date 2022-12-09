@@ -2,7 +2,6 @@ package who.programador;
 
 import who.programador.excel.abstracts.Excel2Database;
 import who.programador.excel.model.OnCall;
-import who.programador.excel.model.Student;
 
 import java.io.IOException;
 

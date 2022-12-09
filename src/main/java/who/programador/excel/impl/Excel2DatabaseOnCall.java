@@ -3,8 +3,8 @@ package who.programador.excel.impl;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
-import who.programador.connections.StatementDatabaseServer;
 import who.programador.connections.IStatement;
+import who.programador.connections.StatementDatabaseServer;
 import who.programador.excel.interfaces.IExcel2Database;
 import who.programador.excel.model.OmCallData;
 import who.programador.excel.shared.ExcelMethod;
@@ -21,7 +21,7 @@ import java.util.List;
 public class Excel2DatabaseOnCall implements IExcel2Database {
 
     private final PreparedStatement preparedStatement;
-    private List<OmCallData> onCallDataList;
+    private final List<OmCallData> onCallDataList;
 
     public Excel2DatabaseOnCall() {
         IStatement statement = new StatementDatabaseServer();
@@ -29,11 +29,11 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
         onCallDataList = new ArrayList<>();
     }
 
-    private OmCallData getOnCallDataByName(String name){
-        if(onCallDataList.isEmpty()) return null;
+    private OmCallData getOnCallDataByName(String name) {
+        if (onCallDataList.isEmpty()) return null;
 
-        for(OmCallData oc : onCallDataList){
-            if(name.equals(oc.getName())) return oc;
+        for (OmCallData oc : onCallDataList) {
+            if (name.equals(oc.getName())) return oc;
         }
         return null;
     }
@@ -58,7 +58,7 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
                     case 0:
                         String name = nextCell.getStringCellValue();
                         onCallData = getOnCallDataByName(name);
-                        if(onCallData == null) {
+                        if (onCallData == null) {
                             onCallData = new OmCallData();
                             onCallData.setName(name);
                             onCallDataList.add(onCallData);
@@ -79,16 +79,33 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
         }
         workbook.close();
 
-        for (OmCallData omCallData : onCallDataList){
+        int JONAS_VALUE_HOUR = 40;
+        int MATHEUS_VALUE_HOUR = 33;
+        int THIAGO_VALUE_HOUR = 43;
+        int LUCAS_VALUE_HOUR = 55;
+
+        for (OmCallData omCallData : onCallDataList) {
             preparedStatement.setString(1, omCallData.getName());
             preparedStatement.setLong(2, omCallData.getTotalTimeInMinute());
-            preparedStatement.setLong(3, 0);
+            if ("Jonas".equals(omCallData.getName())) {
+                preparedStatement.setLong(3, omCallData.calculateValue(JONAS_VALUE_HOUR));
+                preparedStatement.setLong(4, omCallData.calculateValue(JONAS_VALUE_HOUR / 3));
+            } else if ("Matheus".equals(omCallData.getName())) {
+                preparedStatement.setLong(3, omCallData.calculateValue(MATHEUS_VALUE_HOUR));
+                preparedStatement.setLong(4, omCallData.calculateValue(MATHEUS_VALUE_HOUR / 3));
+            } else if ("Thiago".equals(omCallData.getName())) {
+                preparedStatement.setLong(3, omCallData.calculateValue(THIAGO_VALUE_HOUR));
+                preparedStatement.setLong(4, omCallData.calculateValue(THIAGO_VALUE_HOUR / 3));
+            } else if ("Lucas".equals(omCallData.getName())) {
+                preparedStatement.setLong(3, omCallData.calculateValue(LUCAS_VALUE_HOUR));
+                preparedStatement.setLong(4, omCallData.calculateValue(LUCAS_VALUE_HOUR / 3));
+            } else {
+                preparedStatement.setLong(3, 0);
+                preparedStatement.setLong(4, 0);
+            }
             preparedStatement.addBatch();
             preparedStatement.executeBatch();
         }
-
-        // execute the remaining queries
-        preparedStatement.executeBatch();
 
         preparedStatement.getConnection().commit();
         preparedStatement.getConnection().close();

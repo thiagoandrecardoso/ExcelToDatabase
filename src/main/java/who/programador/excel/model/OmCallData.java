@@ -3,9 +3,6 @@ package who.programador.excel.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalTime;
-import java.util.*;
-
 @Getter
 @Setter
 public class OmCallData {
@@ -13,7 +10,12 @@ public class OmCallData {
     private Double value;
     private long totalTimeInMinute = 0L;
 
-    public void addTimeInMinute(long time){
+    public void addTimeInMinute(long time) {
         totalTimeInMinute += time;
     }
+
+    public long calculateValue(long valueHour) {
+        return valueHour * totalTimeInMinute / 60;
+    }
+
 }
