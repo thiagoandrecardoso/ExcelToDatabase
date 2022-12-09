@@ -43,7 +43,12 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
         Workbook workbook = ExcelMethod.getWorkbook(excelFilePath);
         Iterator<Row> rowIterator = ExcelMethod.getRowIterator(workbook);
         rowIterator.next();
+        populateListOnCallDataList(rowIterator);
+        workbook.close();
+        onCallDataListtoDataBase();
+    }
 
+    private void populateListOnCallDataList(Iterator<Row> rowIterator) {
         while (rowIterator.hasNext()) {
             Row nextRow = rowIterator.next();
             Iterator<Cell> cellIterator = nextRow.cellIterator();
@@ -77,12 +82,13 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
                 }
             }
         }
-        workbook.close();
+    }
 
-        long JONAS_VALUE_HOUR = 40L;
-        long MATHEUS_VALUE_HOUR = 33L;
-        long THIAGO_VALUE_HOUR = 43L;
-        long LUCAS_VALUE_HOUR = 55L;
+    private void onCallDataListtoDataBase() throws SQLException {
+        final long JONAS_VALUE_HOUR = 40L;
+        final long MATHEUS_VALUE_HOUR = 33L;
+        final long THIAGO_VALUE_HOUR = 43L;
+        final long LUCAS_VALUE_HOUR = 55L;
 
         for (OmCallData omCallData : onCallDataList) {
             preparedStatement.setString(1, omCallData.getName());
