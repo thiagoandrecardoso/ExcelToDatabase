@@ -45,7 +45,7 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
         rowIterator.next();
         populateListOnCallDataList(rowIterator);
         workbook.close();
-        onCallDataListtoDataBase();
+        onCallDataListToDataBase();
     }
 
     private void populateListOnCallDataList(Iterator<Row> rowIterator) {
@@ -84,7 +84,7 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
         }
     }
 
-    private void onCallDataListtoDataBase() throws SQLException {
+    private void onCallDataListToDataBase() throws SQLException {
         final long JONAS_VALUE_HOUR = 40L;
         final long MATHEUS_VALUE_HOUR = 33L;
         final long THIAGO_VALUE_HOUR = 43L;
