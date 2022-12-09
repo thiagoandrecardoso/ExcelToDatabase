@@ -6,22 +6,36 @@ import org.apache.poi.ss.usermodel.Workbook;
 import who.programador.connections.StatementDatabaseServer;
 import who.programador.connections.IStatement;
 import who.programador.excel.interfaces.IExcel2Database;
+import who.programador.excel.model.OmCallData;
 import who.programador.excel.shared.ExcelMethod;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Excel2DatabaseOnCall implements IExcel2Database {
 
     private final PreparedStatement preparedStatement;
+    private List<OmCallData> onCallDataList;
 
     public Excel2DatabaseOnCall() {
         IStatement statement = new StatementDatabaseServer();
         preparedStatement = statement.getPreparedStatementInsertIntoOnCall();
+        onCallDataList = new ArrayList<>();
+    }
+
+    private OmCallData getOnCallDataByName(String name){
+        if(onCallDataList.isEmpty()) return null;
+
+        for(OmCallData oc : onCallDataList){
+            if(name.equals(oc.getName())) return oc;
+        }
+        return null;
     }
 
     @Override
@@ -33,6 +47,8 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
         while (rowIterator.hasNext()) {
             Row nextRow = rowIterator.next();
             Iterator<Cell> cellIterator = nextRow.cellIterator();
+            OmCallData onCallData = new OmCallData();
+            String hourBegin = "00:00:00";
 
             while (cellIterator.hasNext()) {
                 Cell nextCell = cellIterator.next();
@@ -41,22 +57,36 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
                 switch (columnIndex) {
                     case 0:
                         String name = nextCell.getStringCellValue();
-                        preparedStatement.setString(1, name);
+                        onCallData = getOnCallDataByName(name);
+                        if(onCallData == null) {
+                            onCallData = new OmCallData();
+                            onCallData.setName(name);
+                            onCallDataList.add(onCallData);
+                        }
                         break;
                     case 1:
-                        Date totalTime = nextCell.getDateCellValue();
-                        preparedStatement.setTimestamp(2, new Timestamp(totalTime.getTime()));
+                        hourBegin = nextCell.getStringCellValue();
                         break;
                     case 2:
-                        int totalValue = (int) nextCell.getNumericCellValue();
-                        preparedStatement.setInt(3, totalValue);
+                        String hourEnd = nextCell.getStringCellValue();
+                        LocalTime localTimeBegin = LocalTime.parse(hourBegin);
+                        LocalTime localTimeEnd = LocalTime.parse(hourEnd);
+                        long diference = localTimeBegin.until(localTimeEnd, ChronoUnit.MINUTES);
+                        onCallData.addTimeInMinute(diference);
                         break;
                 }
             }
+        }
+        workbook.close();
+
+        for (OmCallData omCallData : onCallDataList){
+            preparedStatement.setString(1, omCallData.getName());
+            preparedStatement.setLong(2, omCallData.getTotalTimeInMinute());
+            preparedStatement.setLong(3, 0);
             preparedStatement.addBatch();
             preparedStatement.executeBatch();
         }
-        workbook.close();
+
         // execute the remaining queries
         preparedStatement.executeBatch();
 
