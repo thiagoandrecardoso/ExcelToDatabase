@@ -79,10 +79,10 @@ public class Excel2DatabaseOnCall implements IExcel2Database {
         }
         workbook.close();
 
-        int JONAS_VALUE_HOUR = 40;
-        int MATHEUS_VALUE_HOUR = 33;
-        int THIAGO_VALUE_HOUR = 43;
-        int LUCAS_VALUE_HOUR = 55;
+        long JONAS_VALUE_HOUR = 40L;
+        long MATHEUS_VALUE_HOUR = 33L;
+        long THIAGO_VALUE_HOUR = 43L;
+        long LUCAS_VALUE_HOUR = 55L;
 
         for (OmCallData omCallData : onCallDataList) {
             preparedStatement.setString(1, omCallData.getName());
