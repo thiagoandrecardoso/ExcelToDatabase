@@ -10,7 +10,7 @@ public class JdbcPostgresServerConnection implements IJdbcConnection {
     public Connection getConnection() {
         String jdbcURL = "jdbc:postgresql://127.0.0.1:5432/postgres";
         String username = "postgres";
-        String password = "suasenha";
+        String password = "abacaxi98";
 
         Connection connection;
 

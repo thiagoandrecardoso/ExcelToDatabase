@@ -31,8 +31,8 @@ public class StatementDatabaseServer implements IStatement {
         return statement;
     }
 
-    public PreparedStatement getPreparedStatementInsertIntoOnCall(){
-        String sql = "INSERT INTO oncall (name, totaltime, totalvalue) VALUES (?, ?, ?)";
+    public PreparedStatement getPreparedStatementInsertIntoOnCall() {
+        String sql = "INSERT INTO oncall (name, timeinminute, money100p, money33p) VALUES (?, ?, ?, ?)";
         Connection connection = jdbcConnection.getConnection();
 
         PreparedStatement statement;
